@@ -1,6 +1,9 @@
 package com.vobis.spacegame3.entity;
 
+import com.vobis.spacegame3.Screen;
 import com.vobis.spacegame3.entity.component.GameComponent;
+import com.vobis.spacegame3.entity.component.PhysicsComponent;
+import com.vobis.spacegame3.entity.component.RenderComponent;
 import com.vobis.spacegame3.entity.component.UpdateComponent;
 
 import java.util.ArrayList;
@@ -27,6 +30,10 @@ public class World {
     }
 
     public void update() {
+        for (PhysicsComponent component : getComponents((PhysicsComponent.class))) {
+            component.updatePhysics();
+        }
+
         for (UpdateComponent component : getComponents((UpdateComponent.class))) {
             component.update();
         }
@@ -40,5 +47,11 @@ public class World {
         }
 
         entity.init(this);
+    }
+
+    public void render(Screen screen) {
+        for (RenderComponent component : getComponents((RenderComponent.class))) {
+            component.render(screen);
+        }
     }
 }

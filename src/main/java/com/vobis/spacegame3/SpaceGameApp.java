@@ -1,7 +1,9 @@
 package com.vobis.spacegame3;
 
+import com.vobis.spacegame3.entity.EntityEnemy;
 import com.vobis.spacegame3.entity.EntityPlayer;
 import com.vobis.spacegame3.entity.World;
+import com.vobis.spacegame3.entity.component.ControllableComponent;
 import com.vobis.spacegame3.entity.component.UpdateComponent;
 import org.newdawn.slick.*;
 
@@ -13,6 +15,9 @@ public class SpaceGameApp extends BasicGame {
     private int deltaCounter;
 
     private World world;
+    private Screen screen;
+
+    private EntityPlayer thePlayer;
 
     public SpaceGameApp() {
         super("Space Game 3");
@@ -23,11 +28,14 @@ public class SpaceGameApp extends BasicGame {
         System.out.println("Game Started");
 
         world = new World();
-        EntityPlayer player = new EntityPlayer();
+        thePlayer = new EntityPlayer();
+        thePlayer.getPos().set(512, 256);
 
-        world.add(player);
+        EntityEnemy testEnemy = new EntityEnemy();
+        testEnemy.getPos().set(200, 256);
 
-        System.out.println(world.getComponents(UpdateComponent.class));
+        world.add(thePlayer);
+        world.add(testEnemy);
     }
 
     @Override
@@ -39,12 +47,49 @@ public class SpaceGameApp extends BasicGame {
 
             if (world != null) {
                 world.update();
+
+                Input input = gameContainer.getInput();
+
+                if(input.isKeyDown(Input.KEY_W)) {
+                    thePlayer.up();
+                }
+
+                if(input.isKeyDown(Input.KEY_S)) {
+                    thePlayer.down();
+                }
+
+                if(input.isKeyDown(Input.KEY_D)) {
+                    thePlayer.right();
+                }
+
+                if(input.isKeyDown(Input.KEY_A)) {
+                    thePlayer.left();
+                }
+
+                if(input.isKeyDown(Input.KEY_SPACE)) {
+                    thePlayer.fire();
+                }
+
+                if(input.isKeyDown(Input.KEY_LSHIFT)) {
+                    thePlayer.boost();
+                }
+
+                if(input.isKeyDown(Input.KEY_LCONTROL)) {
+                    thePlayer.brake();
+                }
             }
         }
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) {
+        if(screen == null) {
+            screen = new Screen(graphics);
+            graphics.setAntiAlias(true);
+        }
 
+        if(world != null) {
+            world.render(screen);
+        }
     }
 
     public static void main(String args[]) throws SlickException {

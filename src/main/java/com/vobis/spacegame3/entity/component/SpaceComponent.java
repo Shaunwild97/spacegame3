@@ -1,10 +1,10 @@
 package com.vobis.spacegame3.entity.component;
 
+import com.vobis.spacegame3.Vector2;
+
 public interface SpaceComponent extends GameComponent {
 
-    public double getX();
-
-    public double getY();
+    public Vector2 getPos();
 
     public double getDir();
 }
