@@ -4,8 +4,13 @@ import com.vobis.spacegame3.Screen;
 
 public class EntityEnemy extends EntityShip {
 
+    public EntityEnemy() {
+        team = 1;
+    }
+
     @Override
     public void update() {
+        super.update();
         fire();
     }
 

@@ -40,7 +40,7 @@ public class World {
 
             for (PhysicsComponent other : getComponents((PhysicsComponent.class))) {
                 if (component == other) {
-                    return;
+                    continue;
                 }
 
                 if(component.getCollision().intersects(other.getCollision())) {

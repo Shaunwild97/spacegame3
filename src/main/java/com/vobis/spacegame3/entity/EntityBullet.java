@@ -23,8 +23,19 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
     }
 
     @Override
-    public void onCollision(PhysicsComponent other) {
+    public void updatePhysics() {
+        super.updatePhysics();
+    }
 
+    @Override
+    public void onCollision(PhysicsComponent other) {
+        if(other instanceof TeamComponent) {
+            if(((TeamComponent)other).getTeam() == getTeam()) {
+                return;
+            }
+        }
+
+        velocity.multiply(-1);
     }
 
     public Shape getCollision() {
@@ -32,7 +43,7 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
     }
 
     public int getTeam() {
-        return 0;
+        return owner.getTeam();
     }
 
     public void render(Screen screen) {
