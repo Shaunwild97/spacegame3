@@ -1,7 +1,6 @@
 package com.vobis.spacegame3.game;
 
 import com.vobis.spacegame3.entity.Entity;
-import com.vobis.spacegame3.game.Screen;
 import com.vobis.spacegame3.entity.component.GameComponent;
 import com.vobis.spacegame3.entity.component.PhysicsComponent;
 import com.vobis.spacegame3.entity.component.RenderComponent;
@@ -14,9 +13,11 @@ import java.util.List;
 public class World {
 
     private HashMap<Class<? extends GameComponent>, List<? extends GameComponent>> componentMap;
+    private List<Entity> entityList;
 
     public World() {
         componentMap = new HashMap<Class<? extends GameComponent>, List<? extends GameComponent>>();
+        entityList = new ArrayList<>();
     }
 
     public <T extends GameComponent> List<T> getComponents(Class<T> type) {
@@ -33,18 +34,21 @@ public class World {
     public void update() {
         updateComponents();
         updatePhysics();
+        removeDeadEntities();
     }
 
     private void updatePhysics() {
-        for (PhysicsComponent component : getComponents((PhysicsComponent.class))) {
+        List<PhysicsComponent> physicsComponents = getComponents(PhysicsComponent.class);
+
+        for (PhysicsComponent component : physicsComponents) {
             component.updatePhysics();
 
-            for (PhysicsComponent other : getComponents((PhysicsComponent.class))) {
+            for (PhysicsComponent other : physicsComponents) {
                 if (component == other) {
                     continue;
                 }
 
-                if(component.getCollision().intersects(other.getCollision())) {
+                if (component.getCollision().intersects(other.getCollision())) {
                     component.onCollision(other);
                 }
             }
@@ -57,6 +61,17 @@ public class World {
         }
     }
 
+    private void removeDeadEntities() {
+        for (int i = 0; i < entityList.size(); i++) {
+            Entity e = entityList.get(i);
+
+            if (!e.isAlive()) {
+                entityList.remove(e);
+                remove(e);
+            }
+        }
+    }
+
     public void add(Entity entity) {
         List<Class<? extends GameComponent>> entityComponents = entity.getComponents();
 
@@ -64,6 +79,7 @@ public class World {
             getComponents(component).add(entity);
         }
 
+        entityList.add(entity);
         entity.init(this);
     }
 
@@ -73,6 +89,8 @@ public class World {
         for (Class component : entityComponents) {
             getComponents(component).remove(entity);
         }
+
+        entityList.remove(entity);
     }
 
     public void render(Screen screen) {

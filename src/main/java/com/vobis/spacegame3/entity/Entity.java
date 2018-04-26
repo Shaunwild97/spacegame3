@@ -6,7 +6,7 @@ import com.vobis.spacegame3.game.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity {
+public class Entity implements GameComponent {
     protected World world;
 
     public void init(World world) {

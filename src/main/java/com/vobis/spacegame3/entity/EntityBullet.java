@@ -9,6 +9,8 @@ import org.newdawn.slick.geom.Shape;
 
 public class EntityBullet extends EntityPhysical implements TeamComponent, RenderComponent {
 
+    private static final double MAX_AGE = 3D;
+
     private EntityShip owner;
 
     public EntityBullet(EntityShip owner) {
@@ -36,6 +38,11 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
         }
 
         velocity.multiply(-1);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return getAge() < MAX_AGE;
     }
 
     public Shape getCollision() {
