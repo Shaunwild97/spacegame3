@@ -1,6 +1,4 @@
-package com.vobis.spacegame3;
-
-import java.util.Vector;
+package com.vobis.spacegame3.game;
 
 /**
  * Vector2 is mutable!

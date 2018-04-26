@@ -1,4 +1,4 @@
-package com.vobis.spacegame3;
+package com.vobis.spacegame3.game;
 
 import org.newdawn.slick.Graphics;
 

@@ -1,6 +1,6 @@
 package com.vobis.spacegame3.entity;
 
-import com.vobis.spacegame3.Screen;
+import com.vobis.spacegame3.game.Screen;
 
 public class EntityPlayer extends EntityShip {
 

@@ -1,6 +1,6 @@
 package com.vobis.spacegame3.entity;
 
-import com.vobis.spacegame3.Screen;
+import com.vobis.spacegame3.game.Screen;
 import com.vobis.spacegame3.entity.component.PhysicsComponent;
 import com.vobis.spacegame3.entity.component.RenderComponent;
 import com.vobis.spacegame3.entity.component.TeamComponent;
