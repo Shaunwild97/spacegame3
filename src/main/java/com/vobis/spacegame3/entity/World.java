@@ -30,10 +30,27 @@ public class World {
     }
 
     public void update() {
+        updateComponents();
+        updatePhysics();
+    }
+
+    private void updatePhysics() {
         for (PhysicsComponent component : getComponents((PhysicsComponent.class))) {
             component.updatePhysics();
-        }
 
+            for (PhysicsComponent other : getComponents((PhysicsComponent.class))) {
+                if (component == other) {
+                    return;
+                }
+
+                if(component.getCollision().intersects(other.getCollision())) {
+                    component.onCollision(other);
+                }
+            }
+        }
+    }
+
+    private void updateComponents() {
         for (UpdateComponent component : getComponents((UpdateComponent.class))) {
             component.update();
         }
@@ -42,11 +59,19 @@ public class World {
     public void add(Entity entity) {
         List<Class<? extends GameComponent>> entityComponents = entity.getComponents();
 
-        for(Class component : entityComponents) {
+        for (Class component : entityComponents) {
             getComponents(component).add(entity);
         }
 
         entity.init(this);
+    }
+
+    public void remove(Entity entity) {
+        List<Class<? extends GameComponent>> entityComponents = entity.getComponents();
+
+        for (Class component : entityComponents) {
+            getComponents(component).remove(entity);
+        }
     }
 
     public void render(Screen screen) {
