@@ -2,7 +2,7 @@ package com.vobis.spacegame3;
 
 import com.vobis.spacegame3.entity.EntityEnemy;
 import com.vobis.spacegame3.entity.EntityPlayer;
-import com.vobis.spacegame3.entity.World;
+import com.vobis.spacegame3.game.World;
 import com.vobis.spacegame3.game.Screen;
 import org.newdawn.slick.*;
 

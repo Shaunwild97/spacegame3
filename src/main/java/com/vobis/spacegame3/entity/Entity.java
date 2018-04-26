@@ -1,6 +1,7 @@
 package com.vobis.spacegame3.entity;
 
 import com.vobis.spacegame3.entity.component.GameComponent;
+import com.vobis.spacegame3.game.World;
 
 import java.util.ArrayList;
 import java.util.List;
