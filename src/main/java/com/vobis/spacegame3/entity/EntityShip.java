@@ -5,17 +5,19 @@ import com.vobis.spacegame3.entity.component.RenderComponent;
 import com.vobis.spacegame3.entity.component.TeamComponent;
 import com.vobis.spacegame3.entity.component.UpdateComponent;
 import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Shape;
 
 public abstract class EntityShip extends EntityPhysical implements RenderComponent, UpdateComponent, ControllableComponent, TeamComponent {
 
     protected double speed = 0.3D;
-    protected double size = 20;
     protected double turnSpeed = 3;
     protected double fireSpeed = 0.25d;
     protected int team;
 
     private double fireTimer;
+
+    public EntityShip() {
+        collision = new Circle(0, 0, 20);
+    }
 
     @Override
     public void update() {
@@ -55,10 +57,6 @@ public abstract class EntityShip extends EntityPhysical implements RenderCompone
             world.add(bullet);
             fireTimer = fireSpeed;
         }
-    }
-
-    public Shape getCollision() {
-        return new Circle((float) pos.x, (float) pos.y, (int) size);
     }
 
     public int getTeam() {

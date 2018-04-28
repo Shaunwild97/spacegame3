@@ -12,6 +12,7 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
     private static final double MAX_AGE = 3D;
 
     private EntityShip owner;
+    private boolean collided;
 
     public EntityBullet(EntityShip owner) {
         this.owner = owner;
@@ -37,20 +38,21 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
             }
         }
 
-        velocity.multiply(-1);
+        collided = true;
     }
 
     @Override
     public boolean isAlive() {
-        return getAge() < MAX_AGE;
-    }
-
-    public Shape getCollision() {
-        return new Circle((float) pos.x, (float) pos.y, 5);
+        return !collided && getAge() < MAX_AGE;
     }
 
     public int getTeam() {
         return owner.getTeam();
+    }
+
+    @Override
+    public boolean isSolid() {
+        return false;
     }
 
     public void render(Screen screen) {

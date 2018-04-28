@@ -6,6 +6,14 @@ package com.vobis.spacegame3.game;
 public class Vector2 {
     public double x, y;
 
+    public Vector2() {
+    }
+
+    public Vector2(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public Vector2 set(double x, double y) {
         this.x = x;
         this.y = y;
@@ -21,6 +29,18 @@ public class Vector2 {
     public Vector2 add(double x, double y) {
         this.x += y;
         this.y += y;
+        return this;
+    }
+
+    public Vector2 subtract(double x, double y) {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
+
+    public Vector2 subtract(Vector2 other) {
+        this.x -= other.x;
+        this.y -= other.y;
         return this;
     }
 
@@ -65,5 +85,9 @@ public class Vector2 {
         y /= length;
 
         return this;
+    }
+
+    public Vector2 copy() {
+        return new Vector2(this.x, this.y);
     }
 }
