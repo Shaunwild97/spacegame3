@@ -1,6 +1,7 @@
 package com.vobis.spacegame3.game;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Shape;
 
 public class Screen {
     private Graphics g;
@@ -10,13 +11,17 @@ public class Screen {
     }
 
     public void drawRectangle(double x, double y, double width, double height) {
-        g.fillRect((float) x, (float) y, (float) width, (float) height);
+        g.fillRect((float) (x - width / 2), (float) (y - height / 2), (float) width, (float) height);
     }
 
     public void drawRectangle(double x, double y, double width, double height, double dir) {
         g.rotate((float) x, (float) y, (float) dir);
-        drawRectangle(x - width / 2, y - height / 2, width, height);
+        drawRectangle(x, y, width, height);
 
         g.resetTransform();
+    }
+
+    public void drawShape(Shape shape) {
+        g.draw(shape);
     }
 }

@@ -22,7 +22,7 @@ public abstract class EntityPhysical extends Entity implements PhysicsComponent 
     public void updatePhysics() {
         pos.add(velocity);
         age += 0.017D;
-        collision.setLocation((float) pos.x, (float) pos.y);
+        updateCollision();
 
         if (hasDrag) {
             if (velocity.getLengthSq() > VELOCITY_CUTOFF) {
@@ -35,6 +35,11 @@ public abstract class EntityPhysical extends Entity implements PhysicsComponent 
         if (velocity.getLength() > MAX_VELOCITY) {
             velocity.normalize().multiply(MAX_VELOCITY);
         }
+    }
+
+    private void updateCollision() {
+        float radius = collision.getBoundingCircleRadius();
+        collision.setLocation((float) pos.x - radius, (float) pos.y - radius);
     }
 
     @Override

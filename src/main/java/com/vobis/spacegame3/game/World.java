@@ -1,5 +1,6 @@
 package com.vobis.spacegame3.game;
 
+import com.vobis.spacegame3.SpaceGameApp;
 import com.vobis.spacegame3.entity.Entity;
 import com.vobis.spacegame3.entity.component.GameComponent;
 import com.vobis.spacegame3.entity.component.PhysicsComponent;
@@ -96,6 +97,12 @@ public class World {
     public void render(Screen screen) {
         for (RenderComponent component : getComponents((RenderComponent.class))) {
             component.render(screen);
+        }
+
+        if(SpaceGameApp.DEBUG) {
+            for (PhysicsComponent component : getComponents((PhysicsComponent.class))) {
+                screen.drawShape(component.getCollision());
+            }
         }
     }
 }

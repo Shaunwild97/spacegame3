@@ -1,17 +1,13 @@
 package com.vobis.spacegame3.entity;
 
+import com.vobis.spacegame3.entity.controller.AIController;
 import com.vobis.spacegame3.game.Screen;
 
 public class EntityEnemy extends EntityShip {
 
     public EntityEnemy() {
         team = 1;
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        fire();
+        setController(new AIController(this));
     }
 
     @Override

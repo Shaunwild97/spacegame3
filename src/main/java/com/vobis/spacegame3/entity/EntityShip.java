@@ -4,6 +4,7 @@ import com.vobis.spacegame3.entity.component.ControllableComponent;
 import com.vobis.spacegame3.entity.component.RenderComponent;
 import com.vobis.spacegame3.entity.component.TeamComponent;
 import com.vobis.spacegame3.entity.component.UpdateComponent;
+import com.vobis.spacegame3.entity.controller.Controller;
 import org.newdawn.slick.geom.Circle;
 
 public abstract class EntityShip extends EntityPhysical implements RenderComponent, UpdateComponent, ControllableComponent, TeamComponent {
@@ -14,6 +15,7 @@ public abstract class EntityShip extends EntityPhysical implements RenderCompone
     protected int team;
 
     private double fireTimer;
+    private Controller controller;
 
     public EntityShip() {
         collision = new Circle(0, 0, 20);
@@ -23,6 +25,10 @@ public abstract class EntityShip extends EntityPhysical implements RenderCompone
     public void update() {
         if (fireTimer > 0) {
             fireTimer -= 0.017D;
+        }
+
+        if(controller != null) {
+            controller.update();
         }
     }
 
@@ -57,6 +63,14 @@ public abstract class EntityShip extends EntityPhysical implements RenderCompone
             world.add(bullet);
             fireTimer = fireSpeed;
         }
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 
     public int getTeam() {

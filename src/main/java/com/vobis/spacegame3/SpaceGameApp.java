@@ -8,6 +8,9 @@ import org.newdawn.slick.*;
 
 public class SpaceGameApp extends BasicGame {
 
+    public static boolean DEBUG = true;
+    public static Input INPUT;
+
     private static int GAME_TPS = 60;
     private static int GAME_TICK = 1000 / GAME_TPS;
 
@@ -24,6 +27,7 @@ public class SpaceGameApp extends BasicGame {
 
     @Override
     public void init(GameContainer gameContainer) {
+        INPUT = gameContainer.getInput();
         System.out.println("Game Started");
 
         world = new World();
@@ -41,41 +45,18 @@ public class SpaceGameApp extends BasicGame {
     public void update(GameContainer gameContainer, int delta) {
         deltaCounter += delta;
 
+        Input input = gameContainer.getInput();
+
+        if(input.isKeyPressed(Input.KEY_1)) {
+            DEBUG = !DEBUG;
+            gameContainer.setShowFPS(DEBUG);
+        }
+
         if (deltaCounter >= GAME_TICK) {
             deltaCounter = 0;
 
             if (world != null) {
                 world.update();
-
-                Input input = gameContainer.getInput();
-
-                if(input.isKeyDown(Input.KEY_W)) {
-                    thePlayer.up();
-                }
-
-                if(input.isKeyDown(Input.KEY_S)) {
-                    thePlayer.down();
-                }
-
-                if(input.isKeyDown(Input.KEY_D)) {
-                    thePlayer.right();
-                }
-
-                if(input.isKeyDown(Input.KEY_A)) {
-                    thePlayer.left();
-                }
-
-                if(input.isKeyDown(Input.KEY_SPACE)) {
-                    thePlayer.fire();
-                }
-
-                if(input.isKeyDown(Input.KEY_LSHIFT)) {
-                    thePlayer.boost();
-                }
-
-                if(input.isKeyDown(Input.KEY_LCONTROL)) {
-                    thePlayer.brake();
-                }
             }
         }
     }
