@@ -26,24 +26,31 @@ public class AIController extends Controller {
         });
 
         if(target != null) {
-            double theta = ship.getPos().angleTo(target.getPos());
-            double delta = ship.getDir() - theta;
+            handleFiring(target);
+            handleMovement(target);
+        }
+    }
 
-            if (delta > 3) {
-                ship.left();
-            } else if (delta < -3) {
-                ship.right();
-            } else {
-                ship.fire();
-            }
+    private void handleFiring(EntityShip target) {
+        double theta = ship.getPos().angleTo(target.getPos());
+        double delta = ship.getDir() - theta;
 
-            double distanceSq = ship.getPos().getDistanceSq(target.getPos());
+        if (delta > 3) {
+            ship.left();
+        } else if (delta < -3) {
+            ship.right();
+        } else {
+            ship.fire();
+        }
+    }
 
-            if(distanceSq > chaseDistanceSq) {
-                ship.up();
-            } else {
-                ship.brake();
-            }
+    private void handleMovement(EntityShip target) {
+        double distanceSq = ship.getPos().getDistanceSq(target.getPos());
+
+        if(distanceSq > chaseDistanceSq) {
+            ship.up();
+        } else {
+            ship.brake();
         }
     }
 
