@@ -7,5 +7,4 @@ public interface ControllableComponent {
     public void right();
     public void fire();
     public void brake();
-    public void boost();
 }

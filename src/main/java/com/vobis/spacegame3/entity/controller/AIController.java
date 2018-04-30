@@ -2,6 +2,7 @@ package com.vobis.spacegame3.entity.controller;
 
 import com.vobis.spacegame3.entity.EntityShip;
 import com.vobis.spacegame3.entity.component.TeamComponent;
+import com.vobis.spacegame3.game.Vector2;
 import com.vobis.spacegame3.game.World;
 
 public class AIController extends Controller {
@@ -32,7 +33,9 @@ public class AIController extends Controller {
     }
 
     private void handleFiring(EntityShip target) {
-        double theta = ship.getPos().angleTo(target.getPos());
+        Vector2 aimPoint = target.getPos().copy().add(target.getVelocity().copy().multiply(50));
+
+        double theta = ship.getPos().angleTo(aimPoint);
         double delta = ship.getDir() - theta;
 
         if (delta > 3) {
