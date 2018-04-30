@@ -28,4 +28,8 @@ public class Entity implements GameComponent {
 
         return result;
     }
+
+    public World getWorld() {
+        return world;
+    }
 }

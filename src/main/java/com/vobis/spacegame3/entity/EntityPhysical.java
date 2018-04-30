@@ -1,11 +1,12 @@
 package com.vobis.spacegame3.entity;
 
 import com.vobis.spacegame3.entity.component.PhysicsComponent;
+import com.vobis.spacegame3.entity.component.SpaceComponent;
 import com.vobis.spacegame3.game.Vector2;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
-public abstract class EntityPhysical extends Entity implements PhysicsComponent {
+public abstract class EntityPhysical extends Entity implements PhysicsComponent, SpaceComponent {
 
     private static final double RESISTANCE = 0.98D; //lower is more
     private static final double VELOCITY_CUTOFF = 0.01D; //the point where velocity snaps to 0

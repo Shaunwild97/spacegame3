@@ -2,14 +2,12 @@ package com.vobis.spacegame3.game;
 
 import com.vobis.spacegame3.SpaceGameApp;
 import com.vobis.spacegame3.entity.Entity;
-import com.vobis.spacegame3.entity.component.GameComponent;
-import com.vobis.spacegame3.entity.component.PhysicsComponent;
-import com.vobis.spacegame3.entity.component.RenderComponent;
-import com.vobis.spacegame3.entity.component.UpdateComponent;
+import com.vobis.spacegame3.entity.component.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class World {
 
@@ -73,6 +71,22 @@ public class World {
         }
     }
 
+    public <T extends SpaceComponent> T getNearestSpaceComponent(SpaceComponent entity, Class<T> type) {
+        return (T) getComponents(SpaceComponent.class).stream()
+                .filter(e -> e != entity)
+                .filter(e -> e.getClass().isAssignableFrom(type))
+                .sorted((s1, s2) -> (int) (s1.getPos().getDistanceSq(entity.getPos()) - s2.getPos().getDistanceSq(entity.getPos())))
+                .findFirst().get();
+    }
+
+    public <T extends SpaceComponent> T getNearestSpaceComponent(SpaceComponent entity, Predicate<SpaceComponent> filter) {
+        return (T) getComponents(SpaceComponent.class).stream()
+                .filter(e -> e != entity)
+                .filter(filter)
+                .sorted((s1, s2) -> (int) (s1.getPos().getDistanceSq(entity.getPos()) - s2.getPos().getDistanceSq(entity.getPos())))
+                .findFirst().orElse(null);
+    }
+
     public void add(Entity entity) {
         List<Class<? extends GameComponent>> entityComponents = entity.getComponents();
 
@@ -99,7 +113,7 @@ public class World {
             component.render(screen);
         }
 
-        if(SpaceGameApp.DEBUG) {
+        if (SpaceGameApp.DEBUG) {
             for (PhysicsComponent component : getComponents((PhysicsComponent.class))) {
                 screen.drawShape(component.getCollision());
             }

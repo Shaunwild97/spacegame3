@@ -34,11 +34,13 @@ public class SpaceGameApp extends BasicGame {
         thePlayer = new EntityPlayer();
         thePlayer.getPos().set(512, 256);
 
-        EntityEnemy testEnemy = new EntityEnemy();
-        testEnemy.getPos().set(200, 256);
+        for(int i = 0 ; i < 10; i++) {
+            EntityEnemy testEnemy = new EntityEnemy();
+            testEnemy.getPos().set(i*40, 256);
+            world.add(testEnemy);
+        }
 
         world.add(thePlayer);
-        world.add(testEnemy);
     }
 
     @Override

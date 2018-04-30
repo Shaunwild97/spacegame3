@@ -22,6 +22,7 @@ public class EntityBullet extends EntityPhysical implements TeamComponent, Rende
     }
 
     private void setFlightPath() {
+        velocity.set(owner.getVelocity());
         velocity.addDirection(owner.dir, 10);
     }
 

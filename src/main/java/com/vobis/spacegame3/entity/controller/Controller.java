@@ -1,7 +1,6 @@
 package com.vobis.spacegame3.entity.controller;
 
 import com.vobis.spacegame3.entity.EntityShip;
-import com.vobis.spacegame3.entity.component.ControllableComponent;
 
 public abstract class Controller {
 

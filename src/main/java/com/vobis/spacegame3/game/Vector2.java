@@ -78,6 +78,19 @@ public class Vector2 {
         return result;
     }
 
+    public double getDistance(Vector2 other) {
+        double distSq = getDistanceSq(other);
+        return Math.sqrt(distSq);
+    }
+
+    public double getDistanceSq(Vector2 other) {
+        double xd = other.x - x;
+        double yd = other.y - y;
+        double result = xd * xd + yd * yd;
+
+        return result;
+    }
+
     public Vector2 normalize() {
         double length = getLength();
 
@@ -85,6 +98,19 @@ public class Vector2 {
         y /= length;
 
         return this;
+    }
+
+    public double angleTo(Vector2 other) {
+        double xd = other.x - x;
+        double yd = other.y - y;
+
+        double angle = Math.toDegrees(Math.atan2(yd, xd)) + 90;
+
+        if(angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
     }
 
     public Vector2 copy() {
