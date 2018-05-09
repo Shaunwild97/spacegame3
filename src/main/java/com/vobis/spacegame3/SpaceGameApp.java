@@ -17,8 +17,6 @@ public class SpaceGameApp extends BasicGame {
     private static int GAME_TPS = 60;
     private static int GAME_TICK = 1000 / GAME_TPS;
 
-    private int deltaCounter;
-
     private World world;
     private Screen screen;
 
@@ -58,8 +56,6 @@ public class SpaceGameApp extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        deltaCounter += delta;
-
         Input input = gameContainer.getInput();
 
         if (input.isKeyPressed(Input.KEY_1)) {
@@ -67,15 +63,11 @@ public class SpaceGameApp extends BasicGame {
             gameContainer.setShowFPS(DEBUG);
         }
 
-        if (deltaCounter >= GAME_TICK) {
-            deltaCounter = 0;
-
-            if (world != null) {
-                world.update();
-            }
+        if (world != null) {
+            world.update();
         }
 
-        if(screen.isReady()) {
+        if (screen.isReady()) {
             screen.update();
         }
     }
