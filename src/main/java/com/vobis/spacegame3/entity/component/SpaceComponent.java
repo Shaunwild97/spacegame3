@@ -4,7 +4,7 @@ import com.vobis.spacegame3.game.Vector2;
 
 public interface SpaceComponent extends GameComponent {
 
-    public Vector2 getPos();
+    Vector2 getPos();
 
-    public double getDir();
+    double getDir();
 }

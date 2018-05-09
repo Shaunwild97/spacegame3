@@ -5,12 +5,15 @@ import com.vobis.spacegame3.game.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Entity implements GameComponent {
     protected World world;
+    protected Random rand;
 
     public void init(World world) {
         this.world = world;
+        this.rand = world.getRand();
     }
 
     public final List<Class<? extends GameComponent>> getComponents() {
@@ -31,5 +34,9 @@ public class Entity implements GameComponent {
 
     public World getWorld() {
         return world;
+    }
+
+    public Random getRand() {
+        return rand;
     }
 }

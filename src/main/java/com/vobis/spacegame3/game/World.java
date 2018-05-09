@@ -7,16 +7,19 @@ import com.vobis.spacegame3.entity.component.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class World {
 
     private HashMap<Class<? extends GameComponent>, List<? extends GameComponent>> componentMap;
     private List<Entity> entityList;
+    private Random rand;
 
     public World() {
-        componentMap = new HashMap<Class<? extends GameComponent>, List<? extends GameComponent>>();
+        componentMap = new HashMap<>();
         entityList = new ArrayList<>();
+        rand = new Random(1337);
     }
 
     public <T extends GameComponent> List<T> getComponents(Class<T> type) {
@@ -118,5 +121,9 @@ public class World {
                 screen.drawShape(component.getCollision());
             }
         }
+    }
+
+    public Random getRand() {
+        return rand;
     }
 }

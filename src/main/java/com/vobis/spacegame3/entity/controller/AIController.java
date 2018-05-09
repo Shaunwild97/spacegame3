@@ -33,10 +33,15 @@ public class AIController extends Controller {
     }
 
     private void handleFiring(EntityShip target) {
-        Vector2 aimPoint = target.getPos().copy().add(target.getVelocity().copy().multiply(50));
+        double leadOffset = 30 + (world.getRand().nextInt(50));
+        Vector2 aimPoint = target.getPos().copy().add(target.getVelocity().copy().multiply(leadOffset));
 
         double theta = ship.getPos().angleTo(aimPoint);
         double delta = ship.getDir() - theta;
+
+        if(delta > 180) {
+            delta -= 360;
+        }
 
         if (delta > 3) {
             ship.left();

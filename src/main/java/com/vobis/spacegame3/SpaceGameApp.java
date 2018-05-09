@@ -1,9 +1,12 @@
 package com.vobis.spacegame3;
 
+import com.vobis.spacegame3.entity.EntityAlly;
 import com.vobis.spacegame3.entity.EntityEnemy;
 import com.vobis.spacegame3.entity.EntityPlayer;
-import com.vobis.spacegame3.game.World;
 import com.vobis.spacegame3.game.Screen;
+import com.vobis.spacegame3.game.World;
+import com.vobis.spacegame3.game.camera.Camera;
+import com.vobis.spacegame3.game.camera.TrackingCamera;
 import org.newdawn.slick.*;
 
 public class SpaceGameApp extends BasicGame {
@@ -27,16 +30,26 @@ public class SpaceGameApp extends BasicGame {
 
     @Override
     public void init(GameContainer gameContainer) {
+        gameContainer.setMinimumLogicUpdateInterval(GAME_TICK);
         INPUT = gameContainer.getInput();
         System.out.println("Game Started");
+
+        screen = new Screen();
 
         world = new World();
         thePlayer = new EntityPlayer();
         thePlayer.getPos().set(512, 256);
 
-        for(int i = 0 ; i < 10; i++) {
+        EntityAlly ally = new EntityAlly();
+        ally.getPos().set(600, 256);
+        world.add(ally);
+
+        Camera camera = new TrackingCamera(thePlayer);
+        screen.setCamera(camera);
+
+        for (int i = 0; i < 5; i++) {
             EntityEnemy testEnemy = new EntityEnemy();
-            testEnemy.getPos().set(i*40, 256);
+            testEnemy.getPos().set(i * 40, 256);
             world.add(testEnemy);
         }
 
@@ -49,7 +62,7 @@ public class SpaceGameApp extends BasicGame {
 
         Input input = gameContainer.getInput();
 
-        if(input.isKeyPressed(Input.KEY_1)) {
+        if (input.isKeyPressed(Input.KEY_1)) {
             DEBUG = !DEBUG;
             gameContainer.setShowFPS(DEBUG);
         }
@@ -61,15 +74,18 @@ public class SpaceGameApp extends BasicGame {
                 world.update();
             }
         }
+
+        if(screen.isReady()) {
+            screen.update();
+        }
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) {
-        if(screen == null) {
-            screen = new Screen(graphics);
-            graphics.setAntiAlias(true);
+        if (!screen.isReady()) {
+            screen.init(graphics);
         }
 
-        if(world != null) {
+        if (world != null) {
             world.render(screen);
         }
     }

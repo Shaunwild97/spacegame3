@@ -1,7 +1,7 @@
 package com.vobis.spacegame3.entity.component;
 
 public interface PoolableComponent {
-    public boolean isActive();
+    boolean isActive();
 
-    public void resetState();
+    void resetState();
 }
